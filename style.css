@@ -1,18 +1,16 @@
-/* --- CSS Variables / Themes --- */
+/* --- White Minimalist Theme Variables --- */
 :root[data-theme="light"] {
-    --bg-body: #f8fafc;
+    --bg-body: #ffffff;
     --bg-surface: #ffffff;
-    --bg-sidebar: #f1f5f9;
+    --bg-sidebar: #f8fafc;
     --text-primary: #0f172a;
     --text-secondary: #334155;
     --text-muted: #64748b;
     --border-color: #e2e8f0;
-    --accent-color: #0284c7; /* สีฟ้าไทยโทนสว่าง อ่านง่าย */
-    --accent-hover: #0369a1;
-    --accent-light: #e0f2fe;
-    --code-bg: #0f172a;
-    --code-text: #f8fafc;
-    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    --accent-color: #2563eb;
+    --accent-hover: #1d4ed8;
+    --accent-light: #eff6ff;
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 :root[data-theme="dark"] {
@@ -26,8 +24,6 @@
     --accent-color: #38bdf8;
     --accent-hover: #7dd3fc;
     --accent-light: #075985;
-    --code-bg: #030712;
-    --code-text: #f8fafc;
     --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
 }
 
@@ -42,7 +38,7 @@ body {
     font-family: 'Sarabun', 'Prompt', sans-serif;
     background-color: var(--bg-body);
     color: var(--text-primary);
-    line-height: 1.75;
+    line-height: 1.8;
     font-size: 16px;
     transition: background-color 0.3s, color 0.3s;
 }
@@ -53,10 +49,9 @@ h1, h2, h3, h4 {
     font-weight: 600;
 }
 
-h1 { font-size: 2.1rem; margin-bottom: 0.5rem; line-height: 1.3; }
-h2 { font-size: 1.55rem; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--border-color); color: var(--accent-color); }
-h3 { font-size: 1.2rem; margin: 1.5rem 0 0.75rem; }
-h4 { font-size: 1.05rem; margin: 0.75rem 0 0.5rem; }
+h1 { font-size: 2.2rem; margin-bottom: 0.5rem; line-height: 1.3; }
+h2 { font-size: 1.6rem; margin: 2.5rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--border-color); color: var(--text-primary); }
+h3 { font-size: 1.25rem; margin: 1.5rem 0 0.8rem; }
 
 p { margin-bottom: 1rem; color: var(--text-secondary); }
 
@@ -140,7 +135,7 @@ p { margin-bottom: 1rem; color: var(--text-secondary); }
 
 .toc-link {
     display: block;
-    padding: 0.5rem 0.75rem;
+    padding: 0.50rem 0.75rem;
     color: var(--text-secondary);
     text-decoration: none;
     font-size: 0.92rem;
@@ -149,16 +144,17 @@ p { margin-bottom: 1rem; color: var(--text-secondary); }
 }
 
 .toc-link:hover, .toc-link.active {
-    background-color: var(--accent-light);
+    background-color: var(--bg-body);
     color: var(--accent-color);
-    font-weight: 500;
+    font-weight: 600;
+    border: 1px solid var(--border-color);
 }
 
 /* --- Content Area --- */
 .content {
     flex: 1;
-    padding: 2.5rem 3rem;
-    max-width: 900px;
+    padding: 2.5rem 3.5rem;
+    max-width: 920px;
     background-color: var(--bg-surface);
 }
 
@@ -171,26 +167,107 @@ p { margin-bottom: 1rem; color: var(--text-secondary); }
 .badge {
     display: inline-block;
     padding: 0.2rem 0.7rem;
-    background-color: var(--accent-light);
-    color: var(--accent-color);
+    background-color: #f1f5f9;
+    color: var(--text-primary);
     font-size: 0.82rem;
     font-weight: 600;
     border-radius: 50px;
     margin-bottom: 0.75rem;
+    border: 1px solid var(--border-color);
 }
 
 .subtitle {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     color: var(--text-muted);
 }
 
-/* --- Components --- */
-.formula-box {
+/* --- Slide Card Component --- */
+.slide-card {
+    background-color: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    position: relative;
+}
+
+.slide-badge {
+    display: inline-block;
+    background-color: #0f172a;
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+}
+
+.slide-card h3 {
+    margin-top: 0;
+    color: var(--text-primary);
+}
+
+.slide-card ul {
+    margin-left: 1.2rem;
+    color: var(--text-secondary);
+}
+
+.slide-card li {
+    margin-bottom: 0.5rem;
+}
+
+/* --- Chart Component --- */
+.chart-box {
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    box-shadow: var(--card-shadow);
+}
+
+.chart-caption {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+
+/* --- Image & Formula Component --- */
+.image-box {
+    margin: 1.5rem 0;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    background-color: #fafafa;
+}
+
+.image-box img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+}
+
+.image-caption {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-align: center;
     background-color: var(--bg-body);
+    border-top: 1px solid var(--border-color);
+    margin-bottom: 0;
+}
+
+.formula-box {
+    background-color: #fafafa;
+    border: 1px solid var(--border-color);
     border-left: 4px solid var(--accent-color);
     padding: 1.25rem;
     margin: 1.5rem 0;
-    border-radius: 0 8px 8px 0;
+    border-radius: 6px;
 }
 
 .formula-title {
@@ -204,59 +281,6 @@ p { margin-bottom: 1rem; color: var(--text-secondary); }
     color: var(--text-muted);
     margin-top: 0.5rem;
     margin-bottom: 0;
-}
-
-.card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.25rem;
-    margin: 1.5rem 0;
-}
-
-.card {
-    background-color: var(--bg-body);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 1.25rem;
-    box-shadow: var(--card-shadow);
-}
-
-.callout {
-    padding: 1.25rem;
-    border-radius: 8px;
-    margin: 1.5rem 0;
-}
-
-.callout-info {
-    background-color: var(--accent-light);
-    border: 1px solid var(--accent-color);
-    color: var(--text-primary);
-}
-
-.callout-info ul {
-    margin-top: 0.5rem;
-    padding-left: 1.2rem;
-}
-
-.diagram-box {
-    background-color: var(--code-bg);
-    color: var(--code-text);
-    padding: 1.25rem;
-    border-radius: 8px;
-    margin: 1.5rem 0;
-    overflow-x: auto;
-}
-
-.diagram-title {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin-bottom: 0.5rem;
-}
-
-.ascii-art {
-    font-family: 'Fira Code', monospace;
-    font-size: 0.82rem;
-    line-height: 1.25;
 }
 
 /* --- Tables --- */
@@ -273,43 +297,18 @@ table {
 }
 
 th, td {
-    padding: 0.75rem 1rem;
+    padding: 0.85rem 1rem;
     border-bottom: 1px solid var(--border-color);
 }
 
 th {
-    background-color: var(--bg-body);
+    background-color: #f8fafc;
     font-weight: 600;
 }
 
-.highlight-green { color: #10b981; font-weight: 600; }
-.highlight-blue { color: #0284c7; font-weight: 600; }
-.highlight-gray { color: #6b7280; font-weight: 600; }
-
-/* --- Flowchart --- */
-.flow-chart {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    margin: 1.5rem 0;
-}
-
-.flow-step {
-    background-color: var(--bg-body);
-    border: 1px solid var(--border-color);
-    padding: 0.75rem 1.25rem;
-    border-radius: 8px;
-    width: 100%;
-    max-width: 550px;
-    text-align: center;
-    font-weight: 500;
-}
-
-.flow-arrow {
-    color: var(--accent-color);
-    font-weight: bold;
-}
+.highlight-dark { color: #0f172a; font-weight: 600; }
+.highlight-blue { color: #2563eb; font-weight: 600; }
+.highlight-gray { color: #64748b; font-weight: 600; }
 
 /* --- Footer --- */
 .doc-footer {
