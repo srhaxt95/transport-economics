@@ -11,6 +11,8 @@
     <!-- MathJax สำหรับแสดงผลสมการคณิตศาสตร์ -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- Chart.js สำหรับแสดงผลกราฟทางเศรษฐศาสตร์ -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -38,9 +40,9 @@
                 <p class="toc-title">สารบัญเนื้อหา (บริบทไทย)</p>
                 <ul>
                     <li><a href="#section1" class="toc-link active">1. การตั้งราคาในตลาดขนส่งไทย</a></li>
-                    <li><a href="#section2" class="toc-link">2. มลพิษ & รถติดใน กทม.</a></li>
+                    <li><a href="#section2" class="toc-link">2. มลพิษ & กราฟรถติด กทม.</a></li>
                     <li><a href="#section3" class="toc-link">3. ทำเลอุตสาหกรรม & EEC</a></li>
-                    <li><a href="#section4" class="toc-link">4. โครงข่ายรถไฟฟ้า & เมืองไทย</a></li>
+                    <li><a href="#section4" class="toc-link">4. กราฟ Bid-Rent & รถไฟฟ้า</a></li>
                 </ul>
             </nav>
         </aside>
@@ -49,81 +51,95 @@
         <main class="content">
             <header class="doc-header">
                 <span class="badge">Thailand Transport Policy & Economics</span>
-                <h1>เศรษฐศาสตร์การขนส่งเชิงลึก <br><small>(เน้นตัวอย่างและการประยุกต์ใช้ในประเทศไทย)</small></h1>
-                <p class="subtitle">การวิเคราะห์โมเดลราคา ผลกระทบสิ่งแวดล้อม ทำเลที่ตั้ง EEC และการพัฒนาที่ดินตามแนวรถไฟฟ้าในไทย</p>
+                <h1>เศรษฐศาสตร์การขนส่งเชิงลึก <br><small>(เนื้อหาสไลด์นำเสนอ + บทวิเคราะห์เจาะลึก)</small></h1>
+                <p class="subtitle">ครอบคลุมหัวข้อสำคัญสำหรับทำสไลด์ พร้อมบทวิเคราะห์สมการ โมเดลราคา และกราฟจำลองเชิงเศรษฐศาสตร์</p>
             </header>
 
             <!-- Section 1 -->
             <section id="section1" class="doc-section">
-                <h2>1. การกำหนดราคาในตลาดขนส่งของไทย (Transport Pricing in Thailand)</h2>
-                <p>บริการขนส่งในไทยมีการจัดโครงสร้างราคาที่สะท้อนทั้งกลไกการเลือกปฏิบัติทางด้านราคา (Price Discrimination) และการกำกับดูแลจากภาครัฐ เพื่อบริหารความต้องการเดินทางที่ผันผวน</p>
-
-                <h3>1.1 การแบ่งกลุ่มลูกค้าและการตั้งราคาในประเทศไทย</h3>
-                <div class="card-grid">
-                    <div class="card">
-                        <h4>การตั้งราคาตามช่วงเวลา (Peak / Off-Peak)</h4>
-                        <p><strong>รถไฟ高速/รถไฟฟ้า และทางด่วน:</strong> การทางพิเศษแห่งประเทศไทย (กทพ.) หรือสัมปทานทางด่วน มีการปรับลดค่าผ่านทางในบางสายช่วง Off-peak เพื่อเกลี่ยปริมาณจราจร</p>
-                        <p><strong>ตัวอย่าง:</strong> การให้ส่วนลดค่าผ่านทางด่วนขั้นที่ 1 และ 2 ณ ด่านด่านอาจณรงค์ หรือด่านเมืองทองธานี ในช่วงเวลาที่ไม่เร่งด่วน</p>
-                    </div>
-
-                    <div class="card">
-                        <h4>การแบ่งกลุ่มด้วยตั๋วโดยสาร (Group Pricing)</h4>
-                        <p><strong>รถไฟฟ้า BTS / MRT:</strong> ใช้โครงสร้างราคาแบบเรียงตามระยะทาง (Distance-based) ร่วมกับการอุดหนุนกลุ่มเป้าหมาย เช่น ส่วนลด 50% สำหรับผู้สูงอายุ และส่วนลดสำหรับนักเรียน/นักศึกษา</p>
-                    </div>
+                <h2>1. การกำหนดราคาในตลาดขนส่งของไทย (Transport Pricing)</h2>
+                
+                <!-- Slide Box -->
+                <div class="slide-card">
+                    <div class="slide-badge">Slide Summary</div>
+                    <h3>📌 สรุปเนื้อหาสำหรับสไลด์: การตั้งราคาขนส่งในไทย</h3>
+                    <ul>
+                        <li><strong>คุณลักษณะเฉพาะ:</strong> บริการขนส่งไม่สามารถเก็บสต็อกได้ (Perishability) หากที่นั่งว่าง รายได้จะสูญหายทันที</li>
+                        <li><strong>การตั้งราคาตามช่วงเวลา (Peak/Off-Peak):</strong> ทางด่วน กทพ. และรถไฟฟ้า ลดราคาช่วง Off-Peak เพื่อกระจาย Traffic</li>
+                        <li><strong>Unbundling Strategy:</strong> สายการบินต้นทุนต่ำ (Low-Cost Carriers) แยกราคาตั๋วพื้นฐานออกจากบริการเสริม (Ancillary Revenue)</li>
+                    </ul>
                 </div>
 
-                <h3>1.2 กลยุทธ์ Unbundling ในเส้นทางบินบินภายในประเทศ</h3>
-                <p>สายการบินต้นทุนต่ำในไทย (เช่น Thai AirAsia, Thai Lion Air, VietJet) ใช้กลยุทธ์ **Unbundling Pricing** อย่างเข้มข้นเพื่อทำราคาตั๋วเริ่มต้น (Base Fare) ให้ต่ำที่สุดบนตารางเปรียบเทียบราคา:</p>
+                <div class="image-box">
+                    <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1200&q=80" alt="การเดินทางขนส่งทางอากาศและสายการบิน">
+                    <p class="image-caption">รูปภาพประกอบ: การขนส่งทางอากาศในไทยที่ใช้การบริหารรายได้ (Yield Management)</p>
+                </div>
 
+                <h3>🔎 เจาะลึกเชิงทฤษฎี (Deep Dive)</h3>
+                <p>สายการบินในไทยใช้กลไก **Third-Degree Price Discrimination** ร่วมกับ **Ramsey Pricing Rule** เพื่อแยกกลุ่มผู้โดยสารตามความยืดหยุ่นของอุปสงค์ต่อราคา ($E_d$):</p>
+                
                 <div class="formula-box">
-                    <p class="formula-title">โครงสร้างรายได้สายการบินต้นทุนต่ำในไทย</p>
-                    $$\text{Total Price} = \text{Base Fare} + \text{Baggage} + \text{Seat Selection} + \text{Insurance} + \text{Food}$$
-                    <p class="formula-desc">สายการบินดึงดูดกลุ่มนักท่องเที่ยว (Leisure Travelers) ด้วยค่าโดยสารพื้นฐาน และสร้างกำไรจากบริการเสริม (Ancillary Revenue) โดยเฉพาะตั๋วข้ามภูมิภาค เช่น เชียงใหม่-ภูเก็ต หรือ กรุงเทพฯ-หาดใหญ่</p>
+                    <p class="formula-title">สัดส่วนการตั้งราคาตามกฎของ Ramsey (Ramsey Pricing Rule)</p>
+                    $$\frac{P_i - MC}{P_i} = \frac{k}{|E_i|}$$
+                    <p class="formula-desc">นักท่องเที่ยว ($|E_i|$ สูง) จะได้ราคาตั๋ว $P_i$ ต่ำกว่า นักธุรกิจ ($|E_i|$ ต่ำ) ที่จำเป็นต้องเดินทางกระชั้นชิด</p>
                 </div>
             </section>
 
             <!-- Section 2 -->
             <section id="section2" class="doc-section">
-                <h2>2. ผลกระทบภายนอกและวิกฤตราคมใน กทม. (Externalities in Bangkok)</h2>
-                <p>กรุงเทพมหานครและปริมณฑลประสบปัญหาภาวะล้มเหลวของตลาดขนส่งอย่างรุนแรง ทั้งปัญหาฝุ่นควัน **PM2.5** และปัญหากรุงเทพฯ ติดอันดับเมืองที่มีการจราจรติดขัดมากที่สุดในโลก</p>
+                <h2>2. ผลกระทบภายนอกและวิกฤตจราจร กทม. (Externalities)</h2>
 
-                <h3>2.1 โครงสร้างต้นทุนทางสังคมจากรถยนต์ส่วนบุคคล</h3>
-                <div class="formula-box">
-                    $$\text{Social Cost (กทม.)} = \text{Private Fuel Cost} + \text{Congestion Cost} + \text{PM2.5/Health Cost}$$
-                </div>
-
-                <div class="diagram-box">
-                    <p class="diagram-title">สภาวะการผลิตเกินขนาด (Over-consumption) บนถนนในกรุงเทพฯ</p>
-                    <pre class="ascii-art">
-  ราคา / ต้นทุน (บาท)
-      ^                               Marginal Social Cost (MSC)
-      |                              /  = Private Cost + PM2.5/รถติด
-   P* |-----------------------------/E*
-      |                            /:   Marginal Private Cost (MPC) [น้ำมัน + ค่าทางด่วน]
-  P0  |---------------------------/--E0 /
-      |                          /  : /
-      |                         /   :/   Demand (ความต้องการใช้รถส่วนตัว)
-      +------------------------+----+--------------> ปริมาณรถบนถนน (Q)
-                              Q*   Q0
-                    </pre>
-                </div>
-
-                <div class="callout callout-info">
-                    <strong>ข้อเสนอแนะเชิงนโยบายสำหรับประเทศไทย:</strong>
+                <!-- Slide Box -->
+                <div class="slide-card">
+                    <div class="slide-badge">Slide Summary</div>
+                    <h3>📌 สรุปเนื้อหาสำหรับสไลด์: ผลกระทบภายนอกเชิงลบ (Externalities)</h3>
                     <ul>
-                        <li><strong>Bangkok Congestion Charge (การเก็บเงินรถติด):</strong> การพิจารณาจัดเก็บค่าธรรมเนียมเข้าพื้นที่ใจกลางเมือง (เช่น เขตวัฒนา, ปทุมวัน, บางรัก) เพื่อดึง $Q_0$ กลับมาที่จุดเหมาะสม $Q^*$</li>
-                        <li><strong>การตระหนักถึงต้นทุน PM2.5:</strong> การปรับโครงสร้างภาษีสรรพสามิตน้ำมันดีเซล ให้สะท้อนต้นทุนมลพิษทางอากาศอย่างแท้จริง (Pigouvian Tax)</li>
+                        <li><strong>ภาวะล้มเหลวของตลาด:</strong> ผู้ใช้รถยนต์ส่วนบุคคลจ่ายเฉพาะ "ต้นทุนส่วนบุคคล" (Private Cost) แต่ไม่จ่าย "ต้นทุนทางสังคม" (Social Cost)</li>
+                        <li><strong>ต้นทุนทางสังคมที่เกิดขึ้น:</strong> เสียเวลาจากรถติด + มลพิษฝุ่น PM2.5 + สุขภาพจิตและอุบัติเหตุ</li>
+                        <li><strong>แนวทางแก้ไข:</strong> ใช้ Pigouvian Tax เช่น **Bangkok Congestion Charge** (เก็บเงินรถติดเข้าเมือง)</li>
                     </ul>
+                </div>
+
+                <h3>📊 กราฟทางเศรษฐศาสตร์: สภาวะรถติดและ Deadweight Loss ใน กทม.</h3>
+                <div class="chart-box">
+                    <canvas id="externalityChart"></canvas>
+                    <p class="chart-caption">กราฟแสดงการผลิต/บริโภคเกินขนาด ($Q_0 > Q^*$) ที่ทำให้เกิดความสูญเสียเปล่าทางเศรษฐศาสตร์ (Deadweight Loss)</p>
+                </div>
+
+                <div class="image-box">
+                    <img src="https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=1200&q=80" alt="การจราจรติดขัดในกรุงเทพฯ">
+                    <p class="image-caption">รูปภาพประกอบ: สภาพการจราจรบนถนนในกรุงเทพมหานคร</p>
+                </div>
+
+                <h3>🔎 เจาะลึกเชิงทฤษฎี (Deep Dive)</h3>
+                <p>ดุลยภาพตลาดเสรีทำให้ปริมาณรถบนถนนอยู่ที่ $Q_0$ เนื่องจากผู้ขับขี่พิจารณาเฉพาะ $MPC$ (ค่าน้ำมัน + ค่าทางด่วน) แต่ต้นทุนจริงต่อสังคมคือ $MSC$ ซึ่งรวม $MEC$ (ค่า PM2.5 และเวลาที่ทำให้ผู้อื่นเสียไป) ส่งผลให้เกิดความสูญเสียสวัสดิการสังคม (Deadweight Loss):</p>
+
+                <div class="formula-box">
+                    $$\text{Marginal Social Cost (MSC)} = \text{Marginal Private Cost (MPC)} + \text{Marginal External Cost (MEC)}$$
                 </div>
             </section>
 
             <!-- Section 3 -->
             <section id="section3" class="doc-section">
-                <h2>3. ทฤษฎีทำเลที่ตั้งและพื้นที่ EEC (Location Theory & Thailand EEC)</h2>
-                <p>เขตพัฒนาพิเศษภาคตะวันออก (EEC: ฉะเชิงเทรา, ชลบุรี, ระยอง) เป็นตัวอย่างเชิงรูปธรรมของทฤษฎีทำเลที่ตั้ง (Location Theory) ของ Weber ในการดึงดูดอุตสาหกรรมเป้าหมาย</p>
+                <h2>3. ทฤษฎีทำเลที่ตั้งและพื้นที่ EEC (Location Theory & EEC)</h2>
 
-                <h3>3.1 การวิเคราะห์อุตสาหกรรมในประเทศไทยตามดัชนีวัตถุดิบ (MI)</h3>
+                <!-- Slide Box -->
+                <div class="slide-card">
+                    <div class="slide-badge">Slide Summary</div>
+                    <h3>📌 สรุปเนื้อหาสำหรับสไลด์: ทฤษฎี Weber กับพื้นที่ EEC</h3>
+                    <ul>
+                        <li><strong>Material Index (MI):</strong> วัดสัดส่วนน้ำหนักวัตถุดิบต่อน้ำหนักสินค้าสำเร็จรูป เพื่อเลือกทำเลโรงงาน</li>
+                        <li><strong>MI > 1 (Material-Oriented):</strong> โรงงานตั้งใกล้แหล่งวัตถุดิบ เช่น แปรรูปยางพารา/สับปะรด</li>
+                        <li><strong>MI ≈ 1 (EEC Logistics Hub):</strong> อุตสาหกรรมยานยนต์/EV ตั้งใน EEC เพื่อเข้าถึงท่าเรือแหลมฉบัง</li>
+                    </ul>
+                </div>
 
+                <div class="image-box">
+                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80" alt="ท่าเรือแหลมฉบัง และโลจิสติกส์">
+                    <p class="image-caption">รูปภาพประกอบ: ท่าเรือแหลมฉบัง ศูนย์กลางโลจิสติกส์การขนส่งในพื้นที่ EEC</p>
+                </div>
+
+                <h3>🔎 เจาะลึกเชิงทฤษฎี (Deep Dive)</h3>
                 <div class="table-wrapper">
                     <table>
                         <thead>
@@ -136,58 +152,65 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td><strong>แปรรูปเกษตร / ยางพารา / ไม้ยาง</strong></td>
+                                <td><strong>แปรรูปเกษตร / ยางพารา</strong></td>
                                 <td>$\text{MI} > 1$</td>
-                                <td><span class="highlight-green">ภาคใต้ / ภาคอีสานตอนบน</span></td>
-                                <td>วัตถุดิบสูญเสียน้ำหนักมากระหว่างแปรรูป การตั้งโรงงานใกล้สวนยาง/ไร่มันช่วยลดค่าขนส่งวัตถุดิบ (Inbound Freight)</td>
+                                <td><span class="highlight-dark">ภาคใต้ / ภาคอีสาน</span></td>
+                                <td>วัตถุดิบสูญเสียน้ำหนักมากระหว่างแปรรูป ตั้งใกล้แหล่งวัตถุดิบเพื่อลดค่าขนส่ง</td>
                             </tr>
                             <tr>
                                 <td><strong>ยานยนต์ & EV (EEC)</strong></td>
                                 <td>$\text{MI} \approx 1$</td>
                                 <td><span class="highlight-blue">ชลบุรี / ระยอง (EEC)</span></td>
-                                <td>เน้นการเข้าถึงพอร์ตส่งออก (ท่าเรือแหลมฉบัง) เพื่อลดต้นทุนโลจิสติกส์ระหว่างประเทศ (Intermodal Transport)</td>
+                                <td>เน้นการเข้าถึงพอร์ตส่งออก (ท่าเรือแหลมฉบัง) เพื่อลดต้นทุนโลจิสติกส์ระหว่างประเทศ</td>
                             </tr>
                             <tr>
-                                <td><strong>เครื่องดื่ม / ก่อสร้าง (ปูนซีเมนต์)</strong></td>
+                                <td><strong>เครื่องดื่ม / ปูนซีเมนต์</strong></td>
                                 <td>$\text{MI} < 1$</td>
-                                <td><span class="highlight-gray">กระจายรอบเมืองใหญ่ / กทม.</span></td>
-                                <td>สินค้าสำเร็จรูปมีน้ำหนัก/ปริมาตรเพิ่มขึ้นหลังใส่น้ำ หรือแตกหักง่าย ต้องตั้งใกล้ศูนย์กลางการบริโภค</td>
+                                <td><span class="highlight-gray">รอบเมืองใหญ่ / กทม.</span></td>
+                                <td>สินค้าสำเร็จรูปมีน้ำหนัก/ปริมาตรเพิ่มขึ้น ต้องตั้งใกล้ศูนย์กลางการบริโภค</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-
-                <h3>3.2 โครงสร้างค่าขนส่งและบทบาทของท่าเรือแหลมฉบัง</h3>
-                <p>เนื่องจากมีต้นทุนคงที่ ณ สถานีปลายทาง (Terminal Cost) การขนส่งสินค้าในไทยจึงพยายามปรับเปลี่ยนรูปแบบการขนส่ง (Modal Shift) จากทางถนนไปสู่ทางรางและทางน้ำผ่าน **ไอซีดี ลาดกระบัง (Lat Krabang ICD)** เพื่อลดต้นทุน Line-haul Cost เมื่อระยะทางไกลขึ้น</p>
             </section>
 
             <!-- Section 4 -->
             <section id="section4" class="doc-section">
-                <h2>4. โครงข่ายรถไฟฟ้าและราคาที่ดินใน กทม. (BTS/MRT & Land Value)</h2>
-                <p>การขยายตัวของโครงข่ายรถไฟฟ้าหลายสีในกรุงเทพฯ ส่งผลต่อทฤษฎี **Bid-Rent Theory** และราคาที่ดินรอบสถานีรถไฟฟ้าอย่างชัดเจน</p>
+                <h2>4. โครงข่ายรถไฟฟ้าและราคาที่ดิน กทม. (Bid-Rent Theory)</h2>
 
-                <h3>4.1 Bid-Rent Curve และการเปลี่ยนรูปแบบการใช้ที่ดินใน กทม.</h3>
-                <p>ก่อนมีรถไฟฟ้า พื้นที่ใจกลางเมือง (CBD) เช่น สีลม สาทร สุขุมวิท มีค่าเช่าที่ดินสูงฉีกออกจากพื้นที่อื่นอย่างมาก แต่เมื่อเกิดสายทางรถไฟฟ้าเชื่อมต่อสู่ปริมณฑล (เช่น สายสีม่วง, สายสีเหลือง, สายสีชมพู) ได้เกิดปรากฏการณ์:</p>
-
-                <div class="formula-box">
-                    $$\text{Land Price Increase} \propto \frac{1}{\text{Travel Time to CBD}}$$
-                    <p class="formula-desc">ราคาที่ดินไม่ได้ขึ้นอยู่กับ "ระยะทางทางกายภาพ" อีกต่อไป แต่ขึ้นอยู่กับ "เวลาที่ใช้เดินทางเข้าสู่ CBD" (Travel Time)</p>
+                <!-- Slide Box -->
+                <div class="slide-card">
+                    <div class="slide-badge">Slide Summary</div>
+                    <h3>📌 สรุปเนื้อหาสำหรับสไลด์: รถไฟฟ้ากับราคาที่ดิน (Bid-Rent)</h3>
+                    <ul>
+                        <li><strong>Bid-Rent Theory:</strong> ความสามารถในการจ่ายค่าเช่า/ซื้อที่ดิน ลดลงตามระยะทางที่ห่างจากศูนย์กลางเมือง (CBD)</li>
+                        <li><strong>ผลกระทบจากรถไฟฟ้า BTS/MRT:</strong> ลดเวลาการเดินทาง ทำให้กราฟความเต็มใจจ่ายค่าที่ดินรอบสถานีพุ่งสูงขึ้น</li>
+                        <li><strong>TOD (Transit-Oriented Development):</strong> เกิดการเปลี่ยนการใช้ที่ดินรอบสถานีจากแนวราบเป็น คอนโด High-Rise</li>
+                    </ul>
                 </div>
 
-                <h3>4.2 วงจรพัฒนาที่ดินรอบสถานีขนส่งมวลชน (TOD ในไทย)</h3>
-                <div class="flow-chart">
-                    <div class="flow-step">1. ประกาศสร้างโครงการรถไฟฟ้า (เช่น สายสีส้ม / สายสีน้ำเงิน)</div>
-                    <div class="flow-arrow">↓</div>
-                    <div class="flow-step">2. ราคาที่ดินรัศมี 500 เมตร รอบสถานีพุ่งสูงขึ้นอย่างก้าวกระโดด</div>
-                    <div class="flow-arrow">↓</div>
-                    <div class="flow-step">3. เกิดการเปลี่ยนการใช้ที่ดินจากตึกแถว/แนวราบ เป็น คอนโด High-Rise (High Density)</div>
-                    <div class="flow-arrow">↓</div>
-                    <div class="flow-step">4. จำนวนผู้โดยสาร ณ สถานีเพิ่มขึ้น นำไปสู่การขยายตัวทางเศรษฐกิจในย่านใหม่</div>
+                <h3>📊 กราฟทางเศรษฐศาสตร์: Bid-Rent Curve และราคาที่ดินตามระยะทางจาก CBD</h3>
+                <div class="chart-box">
+                    <canvas id="bidRentChart"></canvas>
+                    <p class="chart-caption">กราฟแสดงค่าเช่า/ราคาที่ดินที่ลดลงเมื่อห่างจาก CBD และการยกตัวขึ้นของราคาที่ดินเมื่อมีสถานีรถไฟฟ้า</p>
+                </div>
+
+                <div class="image-box">
+                    <img src="https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=1200&q=80" alt="รถไฟฟ้า BTS และกรุงเทพมหานคร">
+                    <p class="image-caption">รูปภาพประกอบ: โครงข่ายรถไฟฟ้ามวลชนที่ปรับเปลี่ยน Bid-Rent Curve ในกรุงเทพฯ</p>
+                </div>
+
+                <h3>🔎 เจาะลึกเชิงทฤษฎี (Deep Dive)</h3>
+                <p>ความสัมพันธ์ระหว่างค่าเช่าที่ดินกับระยะทางจากศูนย์กลางเมือง คำนวณได้จากสมการ Bid-Rent ของ Alonso:</p>
+
+                <div class="formula-box">
+                    $$\text{Bid Rent } R(d) = \frac{\text{Profit/Utility} - \text{Transport Cost}(d)}{\text{Land Area}}$$
+                    <p class="formula-desc">เมื่อมีรถไฟฟ้า ต้นทุนการเดินทาง $\text{Transport Cost}(d)$ ลดลง ส่งผลให้ Bid Rent $R(d)$ ในพื้นที่รอบสถานีสูงขึ้นทันที</p>
                 </div>
             </section>
 
             <footer class="doc-footer">
-                <p>© 2026 Thailand Transport Economics Guide • Designed for GitHub Pages</p>
+                <p>© 2026 Thailand Transport Economics Guide • Clean Minimalist White Theme with Charts</p>
             </footer>
         </main>
     </div>
